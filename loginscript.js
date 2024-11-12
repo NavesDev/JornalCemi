@@ -55,7 +55,7 @@ function emverify(){
 function passverify(event){
     let psbox=event.target
     let paserro=document.getElementById("passerror")
-    if (psbox.value.length>8){
+    if (psbox.value.length>=8){
         ok["pass"]=true
         paserro.innerHTML=""
     }else{
