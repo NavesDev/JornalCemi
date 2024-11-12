@@ -1,0 +1,4 @@
+RewriteEngine On
+
+RewriteCond %{THE_REQUEST} /index\.php [NC]
+RewriteRule ^(.*)index\.php$ /$1 [R=301,L]

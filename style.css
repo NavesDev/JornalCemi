@@ -1,0 +1,449 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body{
+    background-color: white;
+    margin: 0;
+    font-family: 'poppins';
+}
+
+footer{
+    background-color: black;
+    margin: 0;
+    padding: 20px;
+    color: white;
+}
+
+#bmenu{
+    display: none;
+}
+
+div#popup_sugest{
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap:30px;
+    text-align: center;
+    border-radius: 30px;
+    width: 40%;
+    min-height: 40%;
+    height: auto;
+    position: fixed;
+    right: 0;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: rgba(0, 0, 0, 0.801);
+    border-style: solid;
+    border-color: rgb(0, 0, 0);
+    border: 20px;
+    color: white;
+    box-shadow: 0px 2px 10px black;
+    overflow:hidden;
+    z-index: 2;
+}
+#x-vetor{
+    width: 20px;
+    size: 20px;
+    align-self: flex-end;
+    margin-right: 20px;
+}
+
+input#sugt{
+    color:white;
+    width: 300px;
+    height: 20px;
+    border-style: solid;
+    border-top:0;
+    border-left: 0;
+    border-radius: 20px;
+    background-color: rgb(66, 66, 66);
+    border-color:rgb(58, 58, 58);
+    font-size: 20px;
+    box-shadow: 0px 2px 10px black;
+}
+
+p#sgtexto{
+    font-size: 17px;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+button#send{
+    background-color: rgb(66, 66, 66);
+    border-color: rgb(58, 58, 58);
+    color:white;
+    width: 100px;
+    height: 40px;
+    border-radius: 20px;
+    border-style: solid;
+    font-size:20px;
+    transition: 750ms;
+}
+button{
+    transition: 750ms;
+}
+button#send:hover{
+    transform: scale(1.1);
+}
+.fot_config{
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 20px;
+    margin-right: 20px;
+    gap:13%;
+    justify-content: center;
+}
+
+.fot_content{
+    display: flex;
+    flex-direction: column;
+    width: 270px;
+    height: 150px;
+}
+.fot_title{
+    font-family: 'poppins';
+    font-size: 24px;
+    margin-top:0px;
+    margin-bottom: 2px;
+}
+
+button#sugest{
+    border-radius: 10px;
+    margin-top: 7px;
+    background-color: rgb(61, 61, 61);
+    border-style: solid;
+    border-color: rgb(48, 48, 48);
+    color: white;
+    font-family: 'poppins';
+    height: 30px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button#sugest:hover{
+    transform: scale(1.1);
+}
+
+.fot_desc{
+    margin: 2px;
+    font-size: 14px;
+    font-family: 'poppins';
+    color: white;
+    text-decoration: none;
+}
+a.fot_desc{
+    font-size: 18px;
+}
+
+header{
+    background-color: black;
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    justify-content: space-around;     
+    margin:0;
+    flex-direction: row;
+}
+
+.logo{
+    width: 150px;
+    height: 60px;
+}
+
+.topo{
+    background-color: black;
+    display: flex;
+    padding: 10px;
+    gap:50px;
+}
+.menuf{
+color: white;
+transition: 750ms;
+}
+.menu{
+    color: white;
+    font-size: 140%;
+    font-family:'poppins';
+    font-weight: bold;
+    font:500;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    text-decoration:none;
+}
+.menuf:hover{
+    
+    scale:1.1;
+}
+
+.profile{
+    width: 60px;
+    height: 60px;
+}
+
+.page{
+    margin: 20px;
+}
+
+.read{
+    margin-right: 30px;
+    margin-left: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    align-content: center;
+    display: flex;
+    gap: 30px;
+    font-family:'poppins';
+    background-color: rgb(197, 197, 197);
+    padding: 20px;
+    border-radius: 50px;
+    border-style:outset;
+    box-shadow: 0px 3px 10px black;
+}
+.leia:hover{
+    background-color: rgb(207, 199, 199);
+}
+.bleia:hover{
+    background-color: rgb(207, 199, 199);
+}
+
+.banner{
+    margin-left: 20px;
+    border-radius: 20px;
+    width: 50%;
+    box-shadow: 20px;
+    background-color: rgb(145, 145, 145);
+}
+
+.bdesc_p{
+    font-size: 20px;
+    
+}
+
+.ptit{
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    font-size: 25px;}
+
+.bdesc_title{
+    font-size: 40px;  
+}
+
+.bdesc{
+   margin-right: 10px;
+   text-align: center;
+}
+
+.bleia{
+    
+    align-content: center;
+    width: 50%;
+    border-radius: 50px;
+    font-size: 20px;
+}
+
+.thumbp{
+    width: 45%;
+    height: 200px;
+    box-sizing: border-box;
+    border-style:groove;
+    border-radius: 20px;
+    display: flex;
+    gap: 20px;    
+    box-shadow: 0px 3px 10px black;
+}
+.tthumb{
+    font-size: 20px; 
+}
+
+.pthumb{
+    font-size: 15px; 
+    color:rgb(63, 63, 63)
+}
+
+.thumb{
+    margin: 10px;
+    width: 257px;
+    height: 173;
+    border-radius: 30px;
+}
+
+.thumb_layout{
+    display: flex;
+    flex-direction: row; 
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+.leia{
+    align-content: center;
+    width: 100px;
+    height: 30px;
+    font-weight: bold;
+    font-family:'poppins';
+    border-radius: 50px;
+    font-size: 15px;
+    transition: 750ms;
+}
+
+#mobilemenu{
+    display: none;
+}
+@media screen and (max-width:1062px){
+    #mobilemenu{
+        z-index: 1;
+        background-color: rgb(31, 31, 31);
+        position: fixed;
+        right: 4%;
+        top:14%;
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        padding: 20px;
+        border-radius: 20px;
+        border-color: rgb(27, 27, 27);
+        border:3px;
+        border-style:solid;
+        max-width: 150px;
+        width: auto;
+        max-height: 250px;
+        height: auto;
+        overflow: scroll;
+    }
+    .mobilelbreak{
+        height: 20px;
+        width: auto;
+       
+    }
+    .mobileitem{
+        color:white;
+        display: block;
+    }
+    #bmenu{
+        display: block;
+        width: 60px;
+        height: 60px;
+    }
+    div#popup_sugest{
+        min-width: 350px;
+        max-width: 500px;
+        width: auto;
+        min-height: 350px;
+        height: auto;
+        max-height: 500px;
+    }
+    header{
+        width: 100%;
+        top:0;
+        background-color: rgb(0, 0, 0);
+        display: flex;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        gap:10%;
+        flex-direction: row;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        margin:0;
+        position: sticky;
+    }
+    .logo{
+        width: 175px;
+        height: 70px;
+        box-sizing: border-box;
+        align-content: flex-start;
+    }
+    .menu{
+        font-size: 0px;
+        width: 0px;
+        height: 0px;
+        text-decoration: none;
+        color: white;
+    }
+    .profile{
+        display: none;
+        align-content:end;
+        box-sizing: border-box;
+    }
+
+    .read{
+    margin: 10;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: auto;
+    min-width: 270px;
+    margin: 0;
+    background-color: rgb(197, 197, 197);
+    padding: 20px;
+    border-radius: 50px;
+    border-style:outset;
+    justify-content: center;
+    align-content: center;
+    }
+    .banner{
+        margin: 0px;
+        border-radius: 20px;
+        width: 100%;
+        box-shadow: 20px;
+        background-color: gray;
+    }
+    .bdesc{
+        font-size: 5px;
+    }
+    .bdesc_p{
+        font-size: 20px;
+    }
+    .ptit{
+        text-align: center;
+    }
+    .thumbp{
+        max-width: 450px;
+        width: auto;
+        min-width: 350px;
+        max-height: 550px;
+        height: auto;
+        align-items: center;
+        box-sizing: border-box;
+        border-style:groove;
+        text-align: center;
+        align-content: center;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;    
+    }
+
+    .bdesc_title{
+        font-size: 30px;
+    }
+
+    .leia{
+        margin-bottom: 10px;
+    }
+
+    .fot_config{
+        justify-content: center;
+        align-items: center;
+        flex-direction: row;
+        gap:30px
+    }
+    .fot_content{
+        max-width: 270px;
+        max-height: 150px;
+        width: auto;
+        height: auto;
+        align-items: center;
+        align-content: center;
+        justify-content: center;
+        text-align: center;
+    }
+}
