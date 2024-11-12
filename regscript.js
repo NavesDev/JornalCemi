@@ -89,12 +89,16 @@ function passverify(event){
 
 function simblelimit(key){
     let evtarget=key.target
-    evtarget.value=evtarget.value.replace(/[^a-zA-Z0-9@._%+-]/g,"")
+    
+    
     
     if(key.target.type=="email" && evtarget.value[0]=="-"){
         evtarget.value=evtarget.value.replace("-","")
-    }
-    if(key.target.id=="usname"){
+    } else if(evtarget.id=="usemail"){
+        evtarget.value = evtarget.value.replace(/[^a-zA-Z0-9@.!#$%&'*/=?^_+-`{|}~]/g, "");
+    } else if(evtarget.id=="uspass"){
+        evtarget.value = evtarget.value.replace(/[^a-zA-Z0-9@._%+\-!#$^&*()=+[\]{};:'",<>\./?\\|~`-]/g, "");
+    }else if(key.target.id=="usname"){
         evtarget.value=evtarget.value.replace(/[^a-zA-Z0-9._-]/g,"")
         if(evtarget.value[0]=="-" || evtarget.value[0]=="_" || evtarget.value[0]=="."){
             evtarget.value=evtarget.value.replace(/[._-]/,"");
@@ -152,14 +156,24 @@ function DateVerify(ev) {
 
 async function sendData(ev){
     let sendbutton = ev.target
-  
+    let Reglog = document.getElementById("logerror")
     if(ok["em"] && ok["pass"] && ok["name"] && ok["date"]){
         try{
             let response = await RegTry(emailinput.value,passinput.value,document.getElementById("usname").value,document.getElementById("birthday").value)
-            
+            if(response.sucess){
+                Reglog.innerHTML = "<p class='busca'> Registrado com sucesso </p>"
+            } else if(response.error.includes("emailR")){
+                Reglog.innerHTML = "<p class='error'> * Email já existente * </p>"
+            } else if (!response.error.includes("connectError")){
+               Reglog.innerHTML = "<p class='error'> * Erro de conexão * </p>"
+            } else {
+                Reglog.innerHTML = "<p class='error'> * Algo deu errado * </p>"
+            }
         } catch (error){
             console.warn(error)
         }
+    } else {
+        Reglog.innerHTML = "<p class='error'>* Preencha todos os campos *</p>"
     }
 }
 

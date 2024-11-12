@@ -71,10 +71,15 @@ function passverify(event){
 
 function simblelimit(key){
     let evtarget=key.target
-    evtarget.value=evtarget.value.replace(/[^a-zA-Z0-9@._%+-]/g,"")
+    
+    
     
     if(key.target.type=="email" && evtarget.value[0]=="-"){
         evtarget.value=evtarget.value.replace("-","")
+    } else if(evtarget.id=="usemail"){
+        evtarget.value = evtarget.value.replace(/[^a-zA-Z0-9@.!#$%&'*/=?^_+-`{|}~]/g, "");
+    } else if(evtarget.id=="uspass"){
+        evtarget.value = evtarget.value.replace(/[^a-zA-Z0-9@._%+\-!#$^&*()=+[\]{};:'",<>\./?\\|~`-]/g, "");
     }
 }
 
