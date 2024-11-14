@@ -162,6 +162,7 @@ async function sendData(ev){
             let response = await RegTry(emailinput.value,passinput.value,document.getElementById("usname").value,document.getElementById("birthday").value)
             if(response.sucess){
                 Reglog.innerHTML = "<p class='busca'> Registrado com sucesso </p>"
+                console.log(response)
             } else if(response.error.includes("emailR")){
                 Reglog.innerHTML = "<p class='error'> * Email já existente * </p>"
             } else if (!response.error.includes("connectError")){

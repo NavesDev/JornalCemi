@@ -1,5 +1,7 @@
 <?php 
     $con = new mysqli("localhost","root","","jornalcemic",3307);
+
+    session_start();
     function hasEmail($email){
         global $con;
         $stmt=$con->prepare("SELECT email FROM login WHERE email=?");
@@ -12,6 +14,45 @@
             $stmt->close();
             return 0;
         }
+    }
+
+    function validateEmail($email) {
+        return filter_var($email, FILTER_VALIDATE_EMAIL) && strlen($email) <= 50;
+    }
+    
+    function validatePassword($password) {
+        return preg_match('/^[a-zA-Z0-9!@#$%^&*()_+={}\[\]\',.?\/-]*$/', $password) && strlen($password) >= 8 && strlen($password) <= 40;
+    }
+    
+    function validateDateOfBirth($dob) {
+        $date = DateTime::createFromFormat('Y-m-d', $dob);
+        $today = new DateTime();
+        $birthdate = new DateTime($dob);
+        return $date && $date->format("Y-m-d") === $dob && ($today->format("Y") - 13) >= $birthdate->format("Y") && ($today->format("Y") - 130) <= $birthdate->format("Y");
+    }
+    
+    function validateUsername($username) {
+        return preg_match('/^[a-zA-Z0-9._-]+$/', $username) && strlen($username) >= 4 && !hasName($username) && strlen($username)<=20;
+    }
+
+    
+    function getUserIP() {
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        } elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
+            $ip = $_SERVER['HTTP_CLIENT_IP'];
+        } else {
+            $ip = $_SERVER['REMOTE_ADDR'];
+        }
+        
+
+        $ip = explode(',', string: $ip)[0];
+        
+        if (!filter_var($ip, FILTER_VALIDATE_IP)) {
+            $ip = false; 
+        }
+
+        return $ip;
     }
 
     function hasName($name){
@@ -27,9 +68,55 @@
             return 0;
         }
     }
+    function tokenGenerate($len){
+        $bytes=random_bytes(ceil($len/2));
+        return base64_encode($bytes);
+    }
+
+    function makeLogin($userId,$userIp){
+        global $con;
+        $token="";
+        $atry = 0;
+    
+        while ($atry<10) {
+            $token=tokenGenerate(random_int(50,98));
+            $stmt = $con->prepare("SELECT token FROM enterlog WHERE token=?");
+            $stmt->bind_param('s',$token);
+            if($stmt->execute()){
+                $r=$stmt->get_result();
+                if($r->num_rows > 0){
+                    $atry++;
+                    $stmt->close();
+                } else {
+                    $stmt->close();
+                    break;
+                }
+            } else {
+                $stmt->close();
+                return false;
+            }
+            
+            if($atry>=10){
+                return false;
+            }
+        }
+        
+        $stmt= $con->prepare('INSERT INTO enterlog(userIp,userId,token) VALUES(? , ? , ?)');
+        $stmt->bind_param('sis',$userIp,$userId, $token);
+        
+        if($stmt->execute()){
+            $stmt->close();
+            
+            $_SESSION['userToken']=$token;
+            return true;
+        } else {
+            $stmt->close();
+            return false;
+        }
+    }
 
     if(isset($_POST["logtry"])){
-        $usemail=$_POST["email"];
+        $usemail=strtolower($_POST["email"]);
         $uspass=$_POST["senha"];
         echo json_encode([
             "sucess"=>true,
@@ -43,37 +130,41 @@
         $usbirth=$_POST["birthday"];
         $usname=$_POST["username"];
         $erros=[];
-        $date=DateTime::createFromFormat('Y-m-d', $usbirth);
+      
         
-        if(!filter_var($usmail,FILTER_VALIDATE_EMAIL) || $he = hasEmail($usmail) || strlen($usmail)>50){
-            if($he){
-                $erros[]="emailR";                
-            } else {
-                $erros[]= "email";
-            }
-        } 
+        if(!validateEmail($usmail)){           
+            $erros[]= "email";
+        } else if(hasEmail($usmail)){
+            $erros[]="emailR";    
+        }
 
-        if(!preg_match('/^[a-zA-Z0-9!@#$%^&*()_+={}\[\]\',.?\/-]*$/', $uspass) || strlen($uspass) < 8 || strlen($uspass) > 40){
+
+        if(!validatePassword( $uspass )){
             $erros[]="senha";
         }
-        $today=new DateTime();
-        $birthdate=new DateTime($usbirth);
+        
 
-        if(!$date || $date->format("Y-m-d")!==$usbirth || $today->format("Y")-13<$birthdate->format("Y") || $today->format("Y")-130>$birthdate->format("Y") ){
+        if(!validateDateOfBirth($usbirth)){
             $erros[]="data";
         }
 
-        if(!preg_match('/^[a-zA-Z0-9._-]+$/', $usname) || $usname[0]=="-" || $usname[0]=='_' || $usname[0]=="." ||strlen($usname)<4 || hasName($usname)){
+        if(!validateUsername($usname)){
             $erros[]="username";
         }
 
         if(count($erros)==0){
+            $password=password_hash($uspass,PASSWORD_DEFAULT);
             $stmt=$con->prepare("INSERT INTO login(email,senha,birthday,userTag) VALUES( ? , ? , ? , ? )");
-            $stmt->bind_param("ssss",$usmail,$uspass,$usbirth,$usname);
+            $stmt->bind_param("ssss",$usmail,$password,$usbirth,$usname);
             if($stmt->execute()){
+                $usid = $con->insert_id;
+                $stmt ->close();
+                $login = makeLogin($usid, getUserIP());
                 echo json_encode([
                     "sucess" => true,
-                    "msg" => "Registrado com sucesso!"
+                    "msg" => "Registrado com sucesso!",
+                    "login" => $login,
+                    "token" => ($login) ? $_SESSION["userToken"] : "n/a"
                 ]);
             } else {
                 echo json_encode([
@@ -82,7 +173,7 @@
                     "error"=> "connectError"
                 ]);
             }
-            $stmt ->close();
+
         } else {
             echo json_encode([
                 'sucess'=>false,
@@ -91,4 +182,5 @@
             ]);
         }
     }
+    $con->close();
 ?>

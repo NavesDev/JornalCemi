@@ -27,6 +27,8 @@
                     "result"=>false
                 ]);
             }
+            $stmt->close();
         }
     }
+    $con->close();
 ?>
