@@ -74,3 +74,20 @@ export async function GetDate(){
         console.error(error)
     }
 }
+
+export async function GetBody(params) {
+    try{
+        let req=await fetch("dataRequest.php",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded" 
+            },
+            body: new URLSearchParams({
+                bodyRequest:true
+            })
+        })
+        return await req.json()
+    }catch(error){
+        console.error(error)
+    }
+}

@@ -5,7 +5,23 @@ body{
     margin: 0;
     font-family: 'poppins';
 }
-
+a{
+    text-decoration: none;
+}
+::-webkit-scrollbar{
+    width: 10px;
+    
+}
+::-webkit-scrollbar-thumb{
+    background-color: rgb(161, 161, 161);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:active{
+    background-color: gray;
+}
+::-webkit-scrollbar-track{
+    background-color: rgba(128, 128, 128, 0.377);
+}
 footer{
     background-color: black;
     margin: 0;
@@ -184,12 +200,17 @@ transition: 750ms;
 }
 
 .profile{
+    object-fit: cover;
+    
+    border-radius: 50%;
     width: 60px;
     height: 60px;
 }
 
 .page{
     margin: 20px;
+    background-color: white;
+    min-height: 100%;
 }
 
 .read{
@@ -316,7 +337,7 @@ transition: 750ms;
         width: auto;
         max-height: 250px;
         height: auto;
-        overflow: scroll;
+        overflow-y: scroll;
     }
     .mobilelbreak{
         height: 20px;
@@ -349,7 +370,7 @@ transition: 750ms;
         padding-bottom: 10px;
         gap:10%;
         flex-direction: row;
-        justify-content: center;
+        justify-content: space-around;
         align-content: center;
         align-items: center;
         margin:0;
