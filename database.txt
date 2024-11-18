@@ -8,7 +8,7 @@ create table Login(
     userTag varchar(30) not null unique,
     userIcon varchar(100),
     isAdmin boolean default false,
-    stats boolean default true,
+    accState boolean default true,
     ddc timestamp default current_timestamp
 );
 

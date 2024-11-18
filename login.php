@@ -163,9 +163,9 @@
                 echo json_encode([
                     "sucess" => true,
                     "msg" => "Registrado com sucesso!",
-                    "login" => $login,
-                    "token" => ($login) ? $_SESSION["userToken"] : "n/a"
+                    "login" => $login
                 ]);
+                
             } else {
                 echo json_encode([
                     "sucess" =>false,

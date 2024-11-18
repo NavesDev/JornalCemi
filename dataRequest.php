@@ -20,7 +20,7 @@
        
     }
 
-    if(isset($_POST["bodyRequest"])){
+    //if(isset($_POST["bodyRequest"])){
         if(isset($_SESSION["userToken"])){
             $tok=$_SESSION["userToken"];
             $stmt=$con->prepare("SELECT userId FROM enterlog WHERE token = ? AND tokenState = TRUE");
@@ -30,6 +30,7 @@
                 if($stmt->fetch()){
                     $stmt->close();
                     $body = getBody($userId);
+                    $body["ddc"]=substr($body["ddc"],0,10);
                     if($body && $body!="error"){
                         echo json_encode([
                             "sucess"=>true,
@@ -74,7 +75,7 @@
                 "msg"=>"Não há nenhuma conexão no sistema"
             ]);
         }
-    }
+   // }
 
     $con->close();
 ?> 
