@@ -1,0 +1,42 @@
+use jornalcemic;
+create table Login(
+	nome varchar(100),
+    email varchar(100) UNIQUE NOT NULL,
+    senha varchar(255) not null,
+    birthday date not null,
+    userId int not null auto_increment primary key,
+    userTag varchar(30) not null unique,
+    userIcon varchar(100),
+    isAdmin boolean default false,
+    stats boolean default true,
+    ddc timestamp default current_timestamp
+);
+
+create table EnterLog(
+	EnterId int not null auto_increment primary key,
+    dda timestamp default current_timestamp,
+    userIp varchar(100) not null,
+    userId int not null,
+    token varchar(100) not null,
+    tokenState boolean default true,
+    FOREIGN KEY(userId) REFERENCES Login(userId)
+);
+
+create table Pub(
+	pubId int not null auto_increment primary key,
+    userId int not null,
+    pubName varchar(100) not null,
+    stats boolean default true,
+    thumb varchar(100),
+    pubType varchar(100) not null,
+    FOREIGN KEY (userId) REFERENCES Login(userId)
+);
+
+create table PubRow(
+	pubId int not null,
+	rowId int auto_increment not null primary key, 
+	rowType varchar(25) not null,
+    rowImg varchar(100),
+    rowText varchar(1000),
+    foreign key(pubId) REFERENCES Pub(pubId)
+);
