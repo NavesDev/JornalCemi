@@ -55,7 +55,7 @@
                     unset($_SESSION["userToken"]);
 
                     echo json_encode([
-                        "sucess"=>true,
+                        "sucess"=>false,
                         "body"=>null
                     ]);
                 }

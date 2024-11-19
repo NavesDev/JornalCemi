@@ -1,7 +1,7 @@
 import { GetBody } from "./reqs.js";
 import { newMenu } from "./headerScript.js";
 
-class Body{
+export class Body{
     constructor(body){
         Object.assign(this,body)
     }
@@ -43,9 +43,7 @@ class Body{
             }
         } 
     }
-    
-
-}
+    }
 //esse daqui abre o popupzin de sugestão
 //nem sonhe em apagar algo daqui pq o site vai chora
 
@@ -77,17 +75,26 @@ function sugest(){
     input.addEventListener("input",changed)
 }
 
-
+async function bodyFuncs() {
+    try{
+        const req = await GetBody()
+    if(req.sucess){
+        const body = new Body(req.body)
+        body.assignAllProps()
+    }
+    } catch(error){
+        console.error(error)
+    }
+    
+    
+}
 
 //esse aqui vai roda os bagui básico do site
 Main()
 function Main(){
     sugest()
+    bodyFuncs()
     
 }
-let b = await GetBody()
-let body = new Body(b.body)
-console.log(body)
-body.assignAllProps()
 
 // Desenvolvido por Miiler Dev :D
