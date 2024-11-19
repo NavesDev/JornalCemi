@@ -3,7 +3,11 @@
     flex-direction: column;
     margin-left: 30px;
     gap:7px;
+    padding-bottom: 25px;
+    border-bottom: 2px rgba(128, 128, 128, 0.477) solid;    
 }
+
+
 .cont div input{
     border: 0;
 }
@@ -18,4 +22,31 @@
     padding: 0px 5px 0 5px;
     border-radius: 10px;
     box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.158);
+    cursor: pointer;
+}
+
+.cont div input{
+    width: 10vw;
+    min-width: 300px;
+    max-width: 500px;
+    border-radius: 5px;
+    
+}
+.cont div input:enabled{
+    border: 2px gray solid;
+}
+
+.sec div h3{
+    margin: 0;
+    font-weight: 600;
+}
+.sec div p{
+    margin: 0;
+    color: rgb(63, 63, 63);
+}
+.sec div button{
+    color:rgb(119, 0, 255);
+    background: none;
+    border:2px rgb(119, 0, 255) solid;
+    font-size: 15px;
 }

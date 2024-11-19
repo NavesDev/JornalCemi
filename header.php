@@ -8,7 +8,7 @@
             <a class="menuf" name="VENDAS">VENDAS</a>
         </div>
         <img src="sources/menu.png" alt="menu icon" id="bmenu">
-        <a href="" style="height:60px; width: 60px;" class="profile">
+        <a href="profile.php" style="height:60px; width: 60px;" class="profile">
         <img class="profile needuserIcon" src="sources/user.png" alt="user">
         </a>
     </header>
