@@ -1,3 +1,7 @@
+import { userBody } from "./script.js";
+
+
+
 function menu(){
     //mano menuzin bonitin
     let bmenu=window.document.getElementById("bmenu")
