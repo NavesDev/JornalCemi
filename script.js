@@ -1,11 +1,9 @@
 import { GetBody } from "./reqs.js";
 import { newMenu } from "./headerScript.js";
 
-let body = null
 export class Body{
-    constructor(body,bodyname){
+    constructor(body){
         Object.assign(this,body)
-        this.bodyName=bodyname;
     }
     
     assignProps(prop){
@@ -29,7 +27,7 @@ export class Body{
         for(const PI in props){
            
             const prop = this[props[PI]]
-            const textReqs = document.getElementsByClassName("need" + props[PI] + "f" +this.bodyName)
+            const textReqs = document.getElementsByClassName("need" + props[PI])
 
             if(prop && textReqs.length>0){
                 for(const el of textReqs){
@@ -81,7 +79,8 @@ async function bodyFuncs() {
     try{
         const req = await GetBody()
     if(req.sucess){
-        const body = new Body(req.body,"user")
+        const body = new Body(req.body)
+        body.assignAllProps()
     }
     } catch(error){
         console.error(error)
@@ -97,6 +96,5 @@ function Main(){
     bodyFuncs()
     
 }
-
 
 // Desenvolvido por Miiler Dev :D

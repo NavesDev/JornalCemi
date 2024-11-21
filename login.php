@@ -101,8 +101,22 @@
             }
         }
         
-        $stmt= $con->prepare('INSERT INTO enterlog(userIp,userId,token) VALUES(? , ? , ?)');
-        $stmt->bind_param('sis',$userIp,$userId, $token);
+        $ch = curl_init("http://ip-api.com/json/2001:4860:7:703::72");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        $local=null;
+        $response = curl_exec($ch);
+        
+        if(!curl_errno($ch)){
+            $data = json_decode($response,true);
+            if($data && $data["status"]==="success"){
+
+                $local = ($data['country_name'] ?? "Páis não encontrado").", ". ($data['city']??"cidade não encontrada");
+            }
+        }
+
+        $stmt= $con->prepare('INSERT INTO enterlog(userIp,userId,token,ipLocation) VALUES(? , ? , ?, ?)');
+        $stmt->bind_param('siss',$userIp,$userId, $token,$local);
         
         if($stmt->execute()){
             $stmt->close();

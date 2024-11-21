@@ -3,16 +3,18 @@
     flex-direction: column;
     margin-left: 30px;
     gap:7px;
-    padding-bottom: 25px;
-    border-bottom: 2px rgba(128, 128, 128, 0.477) solid;    
+    
 }
 
-
+.cont:not(:last-child){
+    padding-bottom: 15px;
+    border-bottom: 2px rgba(128, 128, 128, 0.404) solid;
+}
 .cont div input{
     border: 0;
 }
 .cont button{
-    background-color: rgb(119, 0, 255);
+    background-color: rgb(238, 182, 0);
     color: white;
     font-family: 'poppins';
     border: 0;
@@ -24,29 +26,74 @@
     box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.158);
     cursor: pointer;
 }
-
-.cont div input{
-    width: 10vw;
-    min-width: 300px;
-    max-width: 500px;
-    border-radius: 5px;
-    
-}
-.cont div input:enabled{
-    border: 2px gray solid;
+.cont button:hover{
+    background-color: rgb(172, 132, 0);
 }
 
-.sec div h3{
-    margin: 0;
-    font-weight: 600;
+.sec{
+    display: flex;
+    flex-direction: column;
 }
-.sec div p{
-    margin: 0;
-    color: rgb(63, 63, 63);
+.sec div{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
 }
 .sec div button{
-    color:rgb(119, 0, 255);
-    background: none;
-    border:2px rgb(119, 0, 255) solid;
-    font-size: 15px;
+    background:none;
+    border: 2px rgb(212, 163, 0) solid;
+    color:rgb(212, 163, 0);
+    font-size: 13px;
+    height: max-content;
+}
+.sec div button:hover{
+    background-color: rgb(212, 163, 0);
+    color:white;
+}
+
+.sec h3,.sec p{
+    margin: 0;
+}
+.cheader{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: center;
+}
+.cheader h4{
+    font-size: 17px;
+    color: rgb(48, 48, 48);
+    margin: 0;
+}
+
+.info-cont{
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+.info-cont img{
+    width: 17px;
+    cursor: pointer;
+}
+.info-popup{
+    display: flex;
+    visibility: hidden;
+    transition: 300ms;
+    position: absolute;
+    left: 20px;
+    width: 150px;
+    background-color: white;
+    box-shadow: 0px 0px 3px 3px rgba(0, 0, 0, 0.315);
+    padding: 5px;
+    top: 0;
+}
+.info-cont:hover .info-popup{
+    opacity: 1;  
+    visibility: visible;
+    transition: opacity 0.3s ease;
+}
+.info-popup p {
+    font-size: 12px;
 }

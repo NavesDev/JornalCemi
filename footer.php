@@ -1,7 +1,7 @@
 <footer>
         <div class="fot_config">
             <div class="fot_content">
-                <img class="logo" src="sources/Logo.png" alt="logo">
+                <img class="logo" src="sources/jc_logo.png" alt="logo">
                 <p class="fot_desc">
                     
                         O Cemi Invest busca fazer você ser conciente sobre a esconomia da escola de uma maneira profissional.

@@ -19,6 +19,7 @@ create table EnterLog(
     userId int not null,
     token varchar(100) not null,
     tokenState boolean default true,
+	ipLocation varchar(100) default "Sem acesso a localização.",
     FOREIGN KEY(userId) REFERENCES Login(userId)
 );
 
