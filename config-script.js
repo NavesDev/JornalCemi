@@ -1,6 +1,3 @@
-import { userBody } from "./script.js";
+import { GetEnters } from "./reqs.js";
 
-let body = await userBody();
-console.log(body)
-console.log("rey")
-body.assignAllProps()
+GetEnters()

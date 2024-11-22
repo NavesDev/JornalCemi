@@ -113,7 +113,7 @@
     <?php include("footer.php"); ?>
 
     <script src="script.js" type="module"></script>
-
+    <script src="config-script.js" type="module"></script>
 </body>
 
 <!-- Ta procurando oq aqui em baixo cara :^ -->

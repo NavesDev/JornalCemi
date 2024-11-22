@@ -91,3 +91,20 @@ export async function GetBody(params) {
         console.error(error)
     }
 }
+
+export async function GetEnters(){
+    try{
+        let req=await fetch("dataRequest.php",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded" 
+            },
+            body: new URLSearchParams({
+                enterRequest:true
+            })
+        })
+        return await req.json()
+    }catch(error){
+        console.error(error)
+    }
+}
