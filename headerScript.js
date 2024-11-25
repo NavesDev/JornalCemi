@@ -18,6 +18,7 @@ function menu(){
     let login=document.createElement("a")
     login.innerHTML=menuf[0].innerHTML
     login.className="mobileitem"
+    login.href="profile.php"
     login.innerText="➤ CONTA"
     mobilemenu.appendChild(login)
 

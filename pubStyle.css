@@ -1,0 +1,45 @@
+.page h1,h2,h3,h4,p{
+    margin: 0;
+}
+
+.page h1{
+    font-weight: 600;
+    font-size: 32px;
+}
+.page p {
+    font-size: 19px;
+}
+.notHeader{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+.notHeader label{
+    font-size: 21px;
+    color: rgb(75, 75, 75);
+}
+.notHeader img{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 1px gray solid;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0px 10px 40px;
+}
+.content h2{
+    font-size: 28px;
+}
+.content h3{
+    color: rgb(22, 22, 22);
+    font-weight: 600;
+    margin-left: 20px;
+    font-size: 24px;
+}
+.content p{
+    margin-left: 40px;
+    color: rgb(46, 46, 46);
+}

@@ -5,7 +5,9 @@
     gap:7px;
     
 }
-
+h1{
+    margin: 0;
+}
 .cont:not(:last-child){
     padding-bottom: 15px;
     border-bottom: 2px rgba(128, 128, 128, 0.404) solid;
@@ -98,4 +100,43 @@
 .info-popup p {
     font-size: 12px;
     margin: 0;
+}
+.hide {
+    visibility: hidden;
+    display: none;
+}
+.exit-acc{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap:10px;
+    background-color: rgb(223, 223, 223);
+    width: max-content;
+    padding: 5px 10px 5px 10px;
+    border-radius: 10px;
+    transition: 0.6s;
+    cursor: pointer;
+}
+.exit-acc:hover{
+    background-color: rgb(158, 158, 158);
+}
+
+.exit-acc img{
+    filter: brightness(0.3) ;
+
+    width: 22px;
+}
+.exit-acc p{
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: rgb(59, 59, 59);
+}
+.profilePicFull{
+    width: 150px;
+    height: 150px;
+}
+.miniObs{
+    color: rgb(85, 85, 85);
+    font-size: 15px;
 }

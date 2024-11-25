@@ -16,7 +16,7 @@ var hoje
 async function SetDate() {
     try{
         let today=await GetDate()
-        if (today && today.sucess){
+        if (today && today.success){
             hoje=today.result
             today=today.result.substring(0,9)
             let year=Number(today.substring(0,4))
@@ -115,7 +115,7 @@ async function nameVerify(ev){
             nameerror.innerHTML="<p class='busca'>Verificando...</p>"
             let response = await DataVerify("username",nameInput.value)
             console.log(response)
-            if( response && response.sucess){
+            if( response && response.success){
                 if(response.result){
                     nameerror.innerHTML='<p class="error">* Nome de usuário já existente *</p>'
                     ok["name"]=false
@@ -160,7 +160,8 @@ async function sendData(ev){
     if(ok["em"] && ok["pass"] && ok["name"] && ok["date"]){
         try{
             let response = await RegTry(emailinput.value,passinput.value,document.getElementById("usname").value,document.getElementById("birthday").value)
-            if(response.sucess){
+            console.log(response)
+            if(response.success){
                 Reglog.innerHTML = "<p class='busca'> Registrado com sucesso </p>"
                 console.log(response)
             } else if(response.error.includes("emailR")){

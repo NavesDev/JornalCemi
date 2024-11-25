@@ -78,9 +78,12 @@ function sugest(){
 async function bodyFuncs() {
     try{
         const req = await GetBody()
-    if(req.sucess){
+    if(req.success){
         const body = new Body(req.body)
         body.assignAllProps()
+        if(body.isAdmin){
+            newMenu("EDIÇÃO","profile.php")
+        }
     }
     } catch(error){
         console.error(error)

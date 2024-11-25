@@ -160,6 +160,7 @@ header{
     display: flex;
     padding-top: 10px;
     padding-bottom: 10px;
+    align-items: center;
     justify-content: space-around;     
     margin:0;
     flex-direction: row;
@@ -195,7 +196,6 @@ transition: 750ms;
     text-decoration:none;
 }
 .menuf:hover{
-    
     scale:1.1;
 }
 
@@ -203,8 +203,8 @@ transition: 750ms;
     object-fit: cover;
     
     border-radius: 50%;
-    width: 60px;
-    height: 60px;
+    width: 55px;
+    height: 55px;
 }
 
 .page{

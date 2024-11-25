@@ -12,18 +12,18 @@
             if(!$stmt->error){
                 if($result->num_rows > 0) {
                     echo json_encode([
-                        "sucess"=>true,
+                        "success"=>true,
                         "result"=>$result->num_rows
                     ]);
                 } else { 
                     echo json_encode([
-                        "sucess"=>true,
+                        "success"=>true,
                         "result"=>false
                     ]);
                 }
             } else {
                 echo json_encode([
-                    "sucess"=>false,
+                    "success"=>false,
                     "result"=>false
                 ]);
             }

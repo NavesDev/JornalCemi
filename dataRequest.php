@@ -3,6 +3,27 @@ $con = new mysqli("localhost", "root", "", "jornalcemic", 3307);
 session_start();
 
 
+function getUserIP()
+{
+    if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+        $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    } elseif (isset($_SERVER['HTTP_CLIENT_IP'])) {
+        $ip = $_SERVER['HTTP_CLIENT_IP'];
+    } else {
+        $ip = $_SERVER['REMOTE_ADDR'];
+    }
+
+
+    $ip = explode(',', $ip)[0];
+
+    if (!filter_var($ip, FILTER_VALIDATE_IP)) {
+        $ip = false;
+    }
+
+    return $ip;
+}
+
+
 function getBody($id)
 {
     global $con;
@@ -38,28 +59,28 @@ function getUserId()
                     $body = getBody($userId);
                     if ($body && $body != "error") {
                         return [
-                            "sucess" => true,
+                            "success" => true,
                             "id" => $userId
                         ];
                     } else {
-                        return ["sucess"=>false, "error"=>"noBody"];
+                        return ["success"=>false, "error"=>"noBody"];
                     }
                 } else {
                     unset($_SESSION["userToken"]);
                     return [
-                        "sucess" => false,
+                        "success" => false,
                         "error" => "noToken"
                     ];
                 }
             } else {
                 return [
-                    "sucess" => false,
+                    "success" => false,
                     "error" => "conError"
                 ];
             }
         } else {
             return [
-                "sucess" => false,
+                "success" => false,
                 "error" => "noToken"
             ];
         }
@@ -83,19 +104,19 @@ if (isset($_POST["bodyRequest"])) {
                 $body["ddc"] = substr($body["ddc"], 0, 10);
                 if ($body && $body != "error") {
                     echo json_encode([
-                        "sucess" => true,
+                        "success" => true,
                         "body" => $body
                     ]);
                 } else if ($body && $body == "error") {
                     echo json_encode([
-                        "sucess" => false,
+                        "success" => false,
                         "error" => "connection",
                         "msg" => "Erro carregando corpo"
                     ]);
                 } else {
                     unset($_SESSION["userToken"]);
                     echo json_encode([
-                        "sucess" => false,
+                        "success" => false,
                         "msg" => "Conta inativa",
                         "body" => $body
                     ]);
@@ -105,27 +126,27 @@ if (isset($_POST["bodyRequest"])) {
                 unset($_SESSION["userToken"]);
 
                 echo json_encode([
-                    "sucess" => false,
+                    "success" => false,
                     "body" => null
                 ]);
             }
         } else {
             echo json_encode([
-                "sucess" => false,
+                "success" => false,
                 "error" => "connection",
                 "msg" => "Não há nenhuma conexão no sistema"
             ]);
         }
     } else {
         echo json_encode([
-            "sucess" => false,
+            "success" => false,
             "error" => "token",
             "msg" => "Não há nenhuma conexão no sistema"
         ]);
     }
 } else if (isset($_POST["enterRequest"])) {
     $gotId = getUserId();
-    if ($gotId["sucess"]) {
+    if ($gotId["success"]) {
         $userId = $gotId["id"];
         try {
             $st = $con->prepare("SELECT dda,userIp,ipLocation FROM enterlog WHERE tokenState = true AND userId = ? ORDER BY dda DESC");
@@ -136,23 +157,25 @@ if (isset($_POST["bodyRequest"])) {
                 $el = 1;
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
+                        $ip =$row["userIp"];
                         $dados["element" . $el] = [
                             "dda" => $row["dda"],
-                            "ip" => $row["userIp"],
-                            "local" => $row["ipLocation"]
+                            "ip" => $ip,
+                            "local" => $row["ipLocation"],
+                            "thisMachine"=> $ip==getUserIP()
                         ];
                         $el++;
                     }
                     echo json_encode([
-                        "sucess" => true,
+                        "success" => true,
                         "got" => $dados
                     ]);
                 } else {
-                    echo json_encode(["sucess" => false, "error" => "noResult"]);
+                    echo json_encode(["success" => false, "error" => "noResult"]);
                 }
                 $result->free();
             } else {
-                echo json_encode(["sucess"=> false, "error" => "conError"]);
+                echo json_encode(["success"=> false, "error" => "conError"]);
             }
         } finally {
             if(isset($st)){
@@ -161,7 +184,7 @@ if (isset($_POST["bodyRequest"])) {
         }
     } else {
         echo json_encode([
-            "sucess"=> false,
+            "success"=> false,
             "error"=> "noBody"
         ]);
     }

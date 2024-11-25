@@ -85,15 +85,11 @@ function simblelimit(key){
 
 async function sendData(ev){
     let sendbutton = ev.target
-    console.log("Fui clicado")
+
     if(ok["em"] && ok["pass"]){
         try{
             let response = await LogTry(emailinput.value,passinput.value)
-            if(response.logged && response.sucess){
-                console.log("Deu ruim")
-            } else {
-                document.getElementById("logerror").innerHTML = `<p class="error">* ${response["msg"]} *</p>`
-            }
+            console.log(response)
         } catch (error){
             console.warn(error)
         }

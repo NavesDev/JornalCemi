@@ -12,7 +12,7 @@ export async function LogTry(em,pass){
             })
         })
        
-        return await req.json()
+        return await req.json();
     } catch(error){
         console.error("Erro de envio : "+error)
     }
@@ -40,6 +40,23 @@ export async function RegTry(em,pass,name,date){
     }
 }
 
+export async function logOut(){
+    try{
+        let req=await fetch("login.php",{
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded" 
+            },
+            body: new URLSearchParams({
+                logOut:true
+            })
+        });
+       
+        return await req.json();
+    } catch(error){
+        console.error("Erro de envio : "+error)
+    }
+}
 export async function DataVerify(dataType,data){
     try{
         let req=await fetch("DataVerify.php",{

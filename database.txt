@@ -30,6 +30,7 @@ create table Pub(
     stats boolean default true,
     thumb varchar(100),
     pubType varchar(100) not null,
+pubDesc varchar(255) not null,
     FOREIGN KEY (userId) REFERENCES Login(userId)
 );
 
@@ -39,5 +40,6 @@ create table PubRow(
 	rowType varchar(25) not null,
     rowImg varchar(100),
     rowText varchar(1000),
+order int not null,
     foreign key(pubId) REFERENCES Pub(pubId)
 );

@@ -37,7 +37,7 @@
                 </div>
                 <div>
                     <label>Foto de perfil : </label>
-                    <img src="sources/user.png" style="background-color: gray;" class="needuserIcon" alt="">
+                    <img src="sources/user.png" style="background-color: gray;" class="needuserIcon profilePicFull" alt="">
                 </div>
                 <button>EDITAR INFORMAÇÕES</button>
             </div>
@@ -55,56 +55,45 @@
                     <a href="">Alterar a senha</a>
                 </div>
 
-
                 <div>
                     <label>Data de criação de conta : </label>
                     <input type="date" class="needddc" disabled>
                 </div>
+                <div class="exit-acc" id="exit-but">
+                    <img src="sources/exit-but.svg" alt="">
+                    <p>Sair da conta</p>
+                </div>
             </div>
             <h2>Seções</h2>
-            <div class="cont">
+            <div class="cont" id="secSpace">
                 <div class="cheader">
                     <h4>Localização pode ser imprecisa</h4>
                     <div class="info-cont">
-                    <img src="sources/info-icon.svg" alt="">
-                    <div class="info-popup">
-                        <p>
-                        A Localização é descoberta de acordo com o provedor e por esse motivo,
-                        pode faltar algumas informações ou conter informações de outro local (local do provedor) 
-                        </p>
-                    </div>
+                        <img src="sources/info-icon.svg" alt="">
+                        <div class="info-popup">
+                            <p>
+                                A Localização é descoberta de acordo com o provedor e por esse motivo,
+                                pode faltar algumas informações ou conter informações de outro local (local do provedor)
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <div class="sec">
+                <div class="hide" id="secTemplate">
                     <div>
-                        <h3>192.168.0.1</h3>
+                        <h3 id="secIp">192.168.0.1</h3>
                         <button>ENCERRAR SESSÃO</button>
                     </div>
                     <div>
                         <p>Localização:</p>
-                        <input type="text" value="Brasil, São Paulo" disabled>
+                        <input type="text" value="---" id="secLocal" disabled>
                     </div>
                     <div>
                         <p>Data de entrada :</p>
-                        <input type="date" class="needddc" disabled>
-                        
+                        <input id="secDate" type="date" class="" disabled>
+
                     </div>
                 </div>
-                
-                <div class="sec">
-                    <div>
-                        <h3>165.192.12.1</h3>
-                        <button>ENCERRAR SESSÃO</button>
-                    </div>
-                    <div>
-                        <p>Localização:</p>
-                        <input type="text"value="Brasil, São Paulo" disabled>
-                    </div>
-                    <div>
-                        <p>Data de entrada :</p>
-                        <input type="date" class="needddc" disabled>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>

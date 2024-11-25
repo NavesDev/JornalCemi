@@ -5,7 +5,7 @@ session_start();
 function hasEmail($email)
 {
     global $con;
-    $stmt = $con->prepare("SELECT email FROM login WHERE email=?");
+    $stmt = $con->prepare("SELECT email FROM login WHERE email=? AND accState=TRUE");
     $stmt->bind_param("s", $email);
     if ($stmt->execute()) {
         $result = $stmt->get_result();
@@ -52,7 +52,7 @@ function getUserIP()
     }
 
 
-    $ip = explode(',', string: $ip)[0];
+    $ip = explode(',', $ip)[0];
 
     if (!filter_var($ip, FILTER_VALIDATE_IP)) {
         $ip = false;
@@ -95,8 +95,10 @@ function makeLogin($userId, $userIp)
             $r = $stmt->get_result();
             if ($r->num_rows > 0) {
                 $atry++;
+                $r->free();
                 $stmt->close();
             } else {
+                $r->free();
                 $stmt->close();
                 break;
             }
@@ -113,7 +115,7 @@ function makeLogin($userId, $userIp)
     $ch = curl_init("http://ip-api.com/json/$userIp");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-    $local = null;
+    $local = "Sem acesso a localização.";
     $response = curl_exec($ch);
 
     if (!curl_errno($ch)) {
@@ -149,14 +151,60 @@ function makeLogin($userId, $userIp)
 if (isset($_POST["logtry"])) {
     $usemail = strtolower($_POST["email"]);
     $uspass = $_POST["senha"];
-    echo json_encode([
-        "sucess" => true,
-        "msg" => "Seu email e senha foram enviado :" . $usemail . " e " . $uspass,
-        "logged" => false
-    ]);
+    $erros = [];
+
+    if(!validateEmail($usemail) ||!validatePassword($uspass)|| !hasEmail($usemail)){
+        echo json_encode([
+            "success"=>false,
+            "error"=>"invalid",
+            "msg"=>"Email ou senha inválidos",
+        ]);
+    } else {
+        try{
+            $st1 = $con->prepare("SELECT email,senha,userId FROM login WHERE email = ? AND accState = TRUE");
+            $st1->bind_param("s",$usemail);
+        
+            if($st1->execute()){
+                $st1->bind_result($foundEmail,$foundPass,$usid);
+                $st1->fetch();
+                $st1->close();
+                if(password_verify($uspass,$foundPass)){
+                    $r = makeLogin( $usid,getUserIP());
+                    if($r){
+                        echo json_encode([
+                            "success"=>true
+                        ]);
+                    } else {
+                        echo json_encode([
+                            "success"=>false,
+                            "error"=>"conError",
+                            "msg"=>"Algo deu errado, tente reininciar a página"
+                        ]);
+                    }
+                } else {
+                    echo json_encode([
+                        "success"=>false,
+                        "error"=>"invalid",
+                        "msg"=>"Email ou senha inválidos"
+                    ]);
+                }
+            } else {
+                echo json_encode([
+                    "success"=>false,
+                    "error"=>"conError",
+                    "msg"=>"Algo deu errado, tente reininciar a pagina"
+                ]);
+            }
+        } finally {
+            if(isset($st1)){
+                $st1->close();
+            }
+        }
+    }
+
 } else if (isset($_POST["regtry"]) && isset($_POST["email"]) && isset($_POST["senha"]) && isset($_POST["birthday"]) && isset($_POST["username"])) {
 
-    $usmail = $_POST["email"];
+    $usmail = strtolower( $_POST["email"]);
     $uspass = $_POST["senha"];
     $usbirth = $_POST["birthday"];
     $usname = $_POST["username"];
@@ -192,23 +240,46 @@ if (isset($_POST["logtry"])) {
             $stmt->close();
             $login = makeLogin($usid, getUserIP());
             echo json_encode([
-                "sucess" => true,
-                "msg" => "Registrado com sucesso!",
+                "success" => true,
+                "msg" => "Registrado com successo!",
                 "login" => $login
             ]);
         } else {
             echo json_encode([
-                "sucess" => false,
+                "success" => false,
                 "msg" => "Erro de conexão",
                 "error" => "connectError"
             ]);
         }
     } else {
         echo json_encode([
-            'sucess' => false,
+            'success' => false,
             'msg' => 'Algo deu errado',
             'error' => $erros
         ]);
+    }
+} else if (isset($_POST["logOut"])){
+    if(isset($_SESSION["userToken"])){
+        $usToken = $_SESSION["userToken"];
+        try{
+            $newSt=$con->prepare("UPDATE enterlog SET tokenState = false WHERE token = ?");
+            $newSt->bind_param("s",$usToken);
+            if($newSt->execute()){
+                unset($_SESSION["userToken"]);
+                echo json_encode([
+                    "success"=>true
+                ]);
+            } else {
+                echo json_encode([
+                    "success"=>false,
+                    "error"=>"conError",
+                    "msg"=>"Algo deu errado"
+                ]);
+            }
+        }finally{
+            $newSt->close();
+        }
+        
     }
 }
 $con->close();
