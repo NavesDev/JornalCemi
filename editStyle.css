@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.page h1,.titulo,.subtitulo,h4,p{
+    margin: 0;
+}
+
+.page h1{
+    font-weight: 600;
+    font-size: 32px;
+}
+.page p, .parag {
+    font-size: 19px;
+    font-weight: 400;
+    font-family: 'poppins';
+}
+.notHeader{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+}
+.notHeader label{
+    font-size: 21px;
+    color: rgb(75, 75, 75);
+}
+.notHeader img{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 1px gray solid;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0px 10px 40px;
+}
+.content .titulo{
+    font-weight: 600;
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+.content .subtitulo{
+    color: rgb(22, 22, 22);
+    font-weight: 600;
+    margin-left: 20px;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+.content .parag{
+    margin-left: 40px;
+    color: rgb(46, 46, 46);
+    margin-bottom: 7px;
+    display: inline;
+}
+.content .parag + .parag{
+    margin-top: 30px;
+}
+.imgdiv{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 30px;
+
+    height: auto;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    margin-left: 10px;
+}
+.imgdiv img{
+    min-height: 100px;
+    max-height: 270px;
+    border-radius: 10px;
+    box-shadow: 0px 0 3px 2px rgba(73, 73, 73, 0.459);
+    height: max-content;
+    transition: 250ms;
+    cursor: pointer;
+    
+}
+.imgdiv img:hover {
+    scale: 1.1;
+}
+
+textarea{
+   overflow: hidden;
+   resize: none;
+}
+input,textarea{
+    border: 0;
+    transition: 250ms;
+}
+input:focus,textarea:focus{
+    outline: none;
+    background-color: rgb(240, 240, 240);
+    padding: 10px;
+}
+input:focus + .floatingMenu{
+    color: blueviolet;
+}
+#sectypes{
+    font-family: 'poppins';
+    border-radius: 5px;
+    font-size: 18px;   
+}
+
+#sectypes:focus{
+    outline: none;
+}
+.floatingMenu{
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    background-color: white;
+    width: max-content;
+    margin-left: inherit;
+    border-radius: 10px 10px 0px 0px;
+    justify-content: center;
+    position: relative;
+    padding: 5px;
+}
+.floatingMenu div label{
+    font-size: 18px;
+    
+}
+.floatingMenu img{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    aspect-ratio: 1/1;
+}
+#fmenuTemplate{
+    display: none;
+}
