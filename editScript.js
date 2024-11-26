@@ -5,7 +5,7 @@ class Row{
     //os tipos são (1 = titulo 2 = subtitulo 3 = paragrafo)
     constructor(type=3,candestroy=true,canreorder=true){
         this.type=type
-        this.order = ++currentOrder
+        this.order = ++Row.currentOrder
         this.obj = Row.newObj(type,this.order);
         this.editor = this.newEditor(this.obj,candestroy,canreorder);
         this.id = ++Row.currentId
@@ -52,7 +52,7 @@ class Row{
         return el
     }
 
-    static newObj(type) {
+    static newObj(type,order) {
         let el = null;
         if(type==1){
             el = document.createElement("input")
@@ -74,33 +74,33 @@ class Row{
         }
     
         if(el){
-            el.setAttribute("data-order", String());
+            el.setAttribute("data-order", String(order));
             document.getElementById("editing").appendChild(el)
         }
         return el;
     }
 
     static reorder() {
-        // Pega todos os elementos com a classe "item"
+        // Pega todos os elementos com a classe "needOrder"
         const container = document.querySelector("#editing");
         const items = Array.from(container.getElementsByClassName("needOrder"));
-
-        // Ordena os elementos com base no atributo 'data-order'
+    
+        // Ordena os elementos com base no atributo 'data-order', garantindo que seja comparado numericamente
         items.sort((a, b) => {
-            return a.getAttribute("data-order") - b.getAttribute("data-order");
+            return Number(a.getAttribute("data-order")) - Number(b.getAttribute("data-order"));
         });
-
+    
         // Reanexa os elementos ao contêiner na nova ordem
-        items.forEach(item => container.appendChild(item));
+        items.forEach(item => {
+            container.appendChild(item);
+        });
     }
-
     newEditor(obj,candestroy,canreorder){
         const clone = document.getElementById("fmenuTemplate").cloneNode(true)
         clone.id=''
         
         clone.style.display='flex'
         const cd = document.getElementById("editing").insertBefore(clone,obj)
-    
         cd.setAttribute("data-order", String(obj.getAttribute("data-order")-0.5));
         cd.querySelector("#sectypes").value = this.type
         cd.querySelector("#sectypes").addEventListener("change", (ev)=>{
@@ -115,17 +115,52 @@ class Row{
             clone.removeChild(clone.querySelector("#secDestroy"))
         }
         if(canreorder){
-            clone.querySelector("#secUp").addEventListener("click",(ev)=>{
-                let oborder=obj.getAttribute("data-order")
-                if(oborder<Row.currentOrder && oborder>2){
-                    lastob =document.getElementById("editing").querySelector(`[data-order="${oborder+1}"]`)
-                    lasteditor = document.getElementById("editing").querySelector(`[data-order="${oborder+0.5}"]`)
-                    lastob.setAttribute("data-order",String(oborder))
-                    lasteditor.setAttribute("data-order",String(cd.getAttribute("data-order")))
-                    obj.setAttribute("data-order",String(oborder+1))
-                    cd.setAttribute("data-order",String(obj.getAttribute("data-order")-0.5))
-                } 
-            })
+            clone.querySelector("#secUp").addEventListener("click", (ev) => {
+                let oborder = Number(obj.getAttribute("data-order"));
+                
+                // Verifique se o item pode ser movido para cima
+                if (oborder > 2) {
+                    // Encontre o item acima (elemento anterior)
+                    const lastob = document.getElementById("editing").querySelector(`[data-order="${oborder - 1}"]`);
+                    const lasteditor = document.getElementById("editing").querySelector(`[data-order="${oborder - 1.5}"]`);
+                    
+                    // Se o item acima existe, troque a ordem
+                    if (lastob && lasteditor) {
+                        // Troca de ordem: Ajusta os `data-order` de ambos os elementos
+                        lastob.setAttribute("data-order", String(oborder));
+                        lasteditor.setAttribute("data-order", String(oborder - 0.5));
+                        obj.setAttribute("data-order", String(oborder - 1));
+                        cd.setAttribute("data-order", String(oborder - 1.5));
+        
+                        // Reorganiza os elementos na DOM
+                        Row.reorder();
+                    }
+                }
+            });
+        
+            clone.querySelector("#secDown").addEventListener("click", (ev) => {
+                let oborder = obj.getAttribute("data-order");
+        
+                // Verifique se o item pode ser movido para baixo
+                if (oborder < Row.currentOrder) {
+                    // Encontre o item abaixo (elemento posterior)
+                    const lastob = document.getElementById("editing").querySelector(`[data-order="${oborder + 1}"]`);
+                    const lasteditor = document.getElementById("editing").querySelector(`[data-order="${oborder + 0.5}"]`);
+                    
+                    // Se o item abaixo existe, troque a ordem
+                    if (lastob && lasteditor) {
+                        // Troca de ordem: Ajusta os `data-order` de ambos os elementos
+                        lastob.setAttribute("data-order", String(oborder));
+                        lasteditor.setAttribute("data-order", String(oborder - 0.5));
+                        obj.setAttribute("data-order", String(oborder + 1));
+                        cd.setAttribute("data-order", String(oborder + 0.5));
+        
+                        // Reorganiza os elementos na DOM
+                        Row.reorder();
+                    }
+                }
+            });
+
         } else {
             clone.removeChild(clone.querySelector("#secUp"))
             clone.removeChild(clone.querySelector("#secDown"))
@@ -136,5 +171,7 @@ class Row{
 const basetit = new Row(1,false,false);
 const basesub = new Row(2)
 const basep = new Row(3)
+new Row(3)
+
 const parags = document.getElementsByClassName("parag");
 

@@ -24,7 +24,7 @@
             <label class="needuserTag">Autor</label>
         </div>
         <div class="content" id="editing">
-            <div id="fmenuTemplate" class="floatingMenu">
+            <div id="fmenuTemplate" class="floatingMenu needOrder">
                 <div>
                     <label>Tipo:</label>
                     <select name="sectypes" id="sectypes">
