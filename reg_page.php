@@ -62,7 +62,7 @@
             <div id="logerror" class="errorspace">
                 
             </div>
-            <h3>Já possui uma conta? <a href="login_page.html">Faça login</a></h3>
+            <h3>Já possui uma conta? <a href="login_page.php">Faça login</a></h3>
             <h4><a href="">Esqueceu sua senha?</a></h4>
         </div>        
     </div>

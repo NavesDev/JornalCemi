@@ -1,6 +1,6 @@
 <?php
 $con = new mysqli("localhost", "root", "", "jornalcemic", 3307);
-
+header('Content-Type: application/json'); // Garante resposta JSON
 session_start();
 function hasEmail($email)
 {

@@ -125,3 +125,22 @@ export async function GetEnters(){
         console.error(error)
     }
 }
+
+export async function NewPub(pubTitle,pubDesc,pubType,pubThumb) {
+    try{
+        const fData = new FormData()
+        fData.append("newPub",TRUE)
+        fData.append("pTitle",pubTitle)
+        fData.append("pDesc",pubDesc)
+        fData.append("pType",pubType)
+        fData.append("pThumb",pubThumb)
+
+        let req=await fetch("minhas_noticias.php",{
+            method: "POST",
+            body: fData
+        })
+        return await req.json()
+    }catch(error){
+        console.error(error)
+    } 
+}

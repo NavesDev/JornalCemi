@@ -4,6 +4,8 @@ body{
     background-color: white;
     margin: 0;
     font-family: 'poppins';
+    width: 100%;
+
 }
 a{
     text-decoration: none;
@@ -194,9 +196,11 @@ transition: 750ms;
     flex-direction: row;
     gap: 30px;
     text-decoration:none;
+    cursor: pointer;
 }
 .menuf:hover{
     scale:1.1;
+    color: #FFD768;
 }
 
 .profile{

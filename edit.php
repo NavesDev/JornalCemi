@@ -24,22 +24,34 @@
             <label class="needuserTag">Autor</label>
         </div>
         <div class="content" id="editing">
-            <div id="fmenuTemplate" class="floatingMenu needOrder">
-                <div>
-                    <label>Tipo:</label>
-                    <select name="sectypes" id="sectypes">
-                        <option value="1">Título</option>
-                        <option value="2">Subtítulo</option>
-                        <option value="3">Parágrafo</option>
-                    </select>
+            <div id="pubI-contTemplate" class="pub_input needOrder">
+                <div class="floatingMenu">
+                    <div>
+                        <label>Tipo:</label>
+                        <select name="sectypes" id="sectypes">
+                            <option value="1">Título</option>
+                            <option value="2">Subtítulo</option>
+                            <option value="3">Parágrafo</option>
+                        </select>
+                    </div>
+                    <img src="sources/secup.svg" id="secUp" alt="">
+                    <img src="sources/secdown.svg" id="secDown" alt="">
+                    <img src="sources/lixeira.svg" id="secDestroy" alt="">
                 </div>
-                <img src="sources/secup.svg" id="secUp" alt="">
-                <img src="sources/secdown.svg" id="secDown" alt="">
-                <img src="sources/lixeira.svg" id="secDestroy" alt="">
-                <div></div>
+                <div id="obj-content">
+
+                </div>
             </div>
 
+
         </div>
+        <div id="addButton"class="addButton">
+            <img src="sources/add-but.svg" alt="">
+        </div>
+        <div id = "publishdiv">
+            <button >PUBLICAR</button>
+        </div>
+        
     </div>
 
     <?php include("popups.php") ?>

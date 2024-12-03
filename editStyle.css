@@ -130,3 +130,60 @@ input:focus + .floatingMenu{
 #fmenuTemplate{
     display: none;
 }
+.pub_input{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.pub_input #obj-content input,
+.pub_input #obj-content textarea{
+    width: 90%;
+}
+#pubI-contTemplate{
+    display: none;
+}
+.addButton{
+    width: 100%;
+    position: relative;
+    background-color: #eeb600;
+    display: block;
+    height: 9px;
+    border-radius: 10px;
+    transition: 300ms;
+}
+.addButton img{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    transition: 300ms;
+    
+}
+.addButton:hover{
+    height: 15px;
+}
+.addButton:hover >img {
+    width: 30px;
+    height: 30px;
+}
+#publishdiv{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px;
+}
+#publishdiv button{
+    color: white;
+    background-color: #eeb600;
+    border: 0;
+    border-radius: 10px;
+    font-size: 25px;
+    font-family: 'poppins';
+    font-weight: 500;
+    cursor: pointer;
+}
+#publishdiv button:hover{
+    background-color: rgb(212, 163, 0);
+}

@@ -82,7 +82,7 @@ async function bodyFuncs() {
         const body = new Body(req.body)
         body.assignAllProps()
         if(body.isAdmin){
-            newMenu("EDIÇÃO","profile.php")
+            newMenu("EDIÇÃO","minhas_noticias.php")
         }
     }
     } catch(error){

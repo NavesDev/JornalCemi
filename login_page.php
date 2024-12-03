@@ -44,7 +44,7 @@
             <div id="logerror" class="errorspace">
                 
             </div>
-            <h3>Não tem uma conta ainda? <a href="reg_page.html">Registre-se</a></h3>
+            <h3>Não tem uma conta ainda? <a href="reg_page.php">Registre-se</a></h3>
             <h4><a href="">Esqueceu sua senha?</a></h4>
         </div>        
     </div>

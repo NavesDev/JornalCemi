@@ -1,160 +1,203 @@
-class Row{
-    static AllRows=[];
-    static currentId=0;
-    static currentOrder=0;
+class Row {
+    static AllRows = [];
+    static currentId = 0;
+    static currentOrder = 0;
     //os tipos são (1 = titulo 2 = subtitulo 3 = paragrafo)
-    constructor(type=3,candestroy=true,canreorder=true){
-        this.type=type
-        this.order = ++Row.currentOrder
-        this.obj = Row.newObj(type,this.order);
-        this.editor = this.newEditor(this.obj,candestroy,canreorder);
+    constructor(type = 3, candestroy = true, canreorder = true) {
+        this.type = type
         this.id = ++Row.currentId
+        this.obj = Row.newObj(type, this.id, candestroy, canreorder);
+        this.editorFuncs(candestroy, canreorder)
+ 
         Row.AllRows.push(this)
     }
-    objChange(newType,order){
+    objChange(newType) {
         const ownType = this.type;
         let lastValue = ""
-        
-        if(ownType==3){
-            lastValue = this.obj.innerText;
-        } else if(ownType==1 || ownType==2){
-            lastValue = this.obj.value;
+        let lastObj = this.obj.querySelector(".inputValue")
+        if (ownType == 3) {
+            lastValue = lastObj.innerText;
+        } else if (ownType == 1 || ownType == 2) {
+            lastValue = lastObj.value;
         } else {
             lastValue = null
         }
         let el = null;
-        if(newType==3){
-            this.type=newType
+        if (newType == 3) {
+            this.type = newType
             el = document.createElement("textarea")
-            el.className="parag needOrder"
+            el.className = "parag inputValue"
             el.innerText = lastValue
             el.placeholder = "Novo paragrafo"
-        } else if(newType==2){
+            el.addEventListener('input', (ev) => {
+                ev.target.style.height = 'auto';
+                ev.target.style.height = ev.target.scrollHeight + 'px';
+            });
+        } else if (newType == 2) {
             this.type = newType
             el = document.createElement("input")
-            el.className="subtitulo needOrder"
+            el.className = "subtitulo inputValue"
             el.value = lastValue
             el.placeholder = "Novo subtítulo"
-        } else if(newType==1){
+        } else if (newType == 1) {
             this.type = newType
             el = document.createElement("input")
-            el.className="titulo needOrder"
+            el.className = "titulo inputValue"
             el.value = lastValue
             el.placeholder = "Novo título"
+
         }
 
-        if(el){
-            this.obj.replaceWith(el)
-            this.obj = el
+        if (el) {
+            this.obj.querySelector(".inputValue").replaceWith(el)
             this.type = newType
-            el.setAttribute("data-order", String(order));
         }
-        return el
     }
 
-    static newObj(type,order) {
+    static newObj(type, order) {
         let el = null;
-        if(type==1){
+        let clone = document.getElementById("pubI-contTemplate").cloneNode(true);
+        clone.id = ""
+        clone.setAttribute("data-order", String(order));
+        clone = document.getElementById("editing").appendChild(clone)
+        if (type == 1) {
             el = document.createElement("input")
-            el.className="titulo needOrder"
+            el.className = "titulo inputValue"
             el.placeholder = "Novo título"
-        } else if(type==2){
+        } else if (type == 2) {
             el = document.createElement("input")
-            el.className="subtitulo needOrder"
+            el.className = "subtitulo inputValue"
             el.placeholder = "Novo subtítulo"
-
-        } else if(type==3){
+        } else if (type == 3) {
             el = document.createElement("textarea")
-            el.className="parag needOrder"
+            el.className = "parag inputValue"
             el.placeholder = "Novo paragrafo"
-            el.addEventListener('input', (ev)=> {
-                ev.target.style.height = 'auto'; 
-                ev.target.style.height = ev.target.scrollHeight + 'px'; 
+            el.addEventListener('input', (ev) => {
+                ev.target.style.height = 'auto';
+                ev.target.style.height = ev.target.scrollHeight + 'px';
             });
         }
-    
-        if(el){
-            el.setAttribute("data-order", String(order));
-            document.getElementById("editing").appendChild(el)
+
+        if (el) {
+            clone.querySelector("#obj-content").appendChild(el)
         }
-        return el;
+        return clone;
     }
 
     static reorder() {
         // Pega todos os elementos com a classe "needOrder"
+
         const container = document.querySelector("#editing");
         const items = Array.from(container.getElementsByClassName("needOrder"));
-    
+
         // Ordena os elementos com base no atributo 'data-order', garantindo que seja comparado numericamente
         items.sort((a, b) => {
             return Number(a.getAttribute("data-order")) - Number(b.getAttribute("data-order"));
         });
-    
+
         // Reanexa os elementos ao contêiner na nova ordem
         items.forEach(item => {
             container.appendChild(item);
         });
     }
-    newEditor(obj,candestroy,canreorder){
-        const clone = document.getElementById("fmenuTemplate").cloneNode(true)
-        clone.id=''
-        
-        clone.style.display='flex'
-        const cd = document.getElementById("editing").insertBefore(clone,obj)
-        cd.setAttribute("data-order", String(obj.getAttribute("data-order")-0.5));
+    editorFuncs(candestroy, canreorder) {
+        const myobj = this.obj
+        const cd = myobj.querySelector(".floatingMenu")
         cd.querySelector("#sectypes").value = this.type
-        cd.querySelector("#sectypes").addEventListener("change", (ev)=>{
+        cd.querySelector("#sectypes").addEventListener("change", (ev) => {
             const vc = ev.target.value
-            if(vc!=this.type){   
-                this.objChange(vc,obj.getAttribute("data-order"))
+            if (vc != this.type) {
+                this.objChange(vc, myobj.getAttribute("data-order"))
             }
         })
-        if(candestroy){
-
+        if (candestroy) {
+            cd.querySelector("#secDestroy").addEventListener("click", () => {
+                this.destroy()
+            })
         } else {
-            clone.removeChild(clone.querySelector("#secDestroy"))
+            cd.removeChild(cd.querySelector("#secDestroy"))
         }
-        if(canreorder){
-            clone.querySelector("#secUp").addEventListener("click", (ev) => {
-                let oborder = Number(obj.getAttribute("data-order"));
-                
+        if (canreorder) {
+            cd.querySelector("#secUp").addEventListener("click", (ev) => {
+                let oborder = Number(myobj.getAttribute("data-order"));
+
                 // Verifique se o item pode ser movido para cima
                 if (oborder > 2) {
                     // Encontre o item acima (elemento anterior)
-                    const lastob = document.getElementById("editing").querySelector(`[data-order="${oborder - 1}"]`);
-                    const lasteditor = document.getElementById("editing").querySelector(`[data-order="${oborder - 1.5}"]`);
-                    
+                    //const lastob = document.getElementById("editing").querySelector(`[data-order="${oborder - 1}"]`);
+                    const allRows = document.getElementById("editing").querySelectorAll("[data-order]")
+                    let tradeValue = false
+                    let lastValues = []
+                    for (const el of allRows) {
+                        const orderV = Number(el.getAttribute("data-order"))
+                        if (orderV < oborder) {
+                            if (lastValues) {
+                                let trueNumber = true
+                                for (const i of lastValues) {
+                                    if (Number(i.getAttribute("data-order")) > orderV) {
+                                        trueNumber = false
+                                    }
+                                }
+                                if (trueNumber) {
+                                    tradeValue = el
+                                    lastValues.push(el)
+                                }
+                            } else {
+                                tradeValue = el
+                                lastValues.push(el)
+                            }
+                        }
+                    }
                     // Se o item acima existe, troque a ordem
-                    if (lastob && lasteditor) {
+                    if (tradeValue) {
                         // Troca de ordem: Ajusta os `data-order` de ambos os elementos
-                        lastob.setAttribute("data-order", String(oborder));
-                        lasteditor.setAttribute("data-order", String(oborder - 0.5));
-                        obj.setAttribute("data-order", String(oborder - 1));
-                        cd.setAttribute("data-order", String(oborder - 1.5));
-        
+                        myobj.setAttribute("data-order", String(tradeValue.getAttribute("data-order")));
+                        tradeValue.setAttribute("data-order", String(oborder));
+                        
                         // Reorganiza os elementos na DOM
                         Row.reorder();
                     }
                 }
             });
-        
-            clone.querySelector("#secDown").addEventListener("click", (ev) => {
-                let oborder = obj.getAttribute("data-order");
-        
+
+            cd.querySelector("#secDown").addEventListener("click", (ev) => {
+                let oborder = Number(myobj.getAttribute("data-order"));
+
                 // Verifique se o item pode ser movido para baixo
-                if (oborder < Row.currentOrder) {
+                if (oborder < Row.currentId) {
                     // Encontre o item abaixo (elemento posterior)
-                    const lastob = document.getElementById("editing").querySelector(`[data-order="${oborder + 1}"]`);
-                    const lasteditor = document.getElementById("editing").querySelector(`[data-order="${oborder + 0.5}"]`);
-                    
+                    const allRows = document.getElementById("editing").querySelectorAll("[data-order]")
+                    let tradeValue = false
+                    let lastValues = []
+                    for (const el of allRows) {
+                        const orderV = Number(el.getAttribute("data-order"))
+                        if (orderV > oborder) {
+                            if (lastValues) {
+                                let trueNumber = true
+                                for (const i of lastValues) {
+                                    if (Number(i.getAttribute("data-order")) < orderV) {
+                                        trueNumber = false
+                                    }
+                                }
+                                if (trueNumber) {
+                                    tradeValue = el
+                                    lastValues.push(el)
+                                }
+                            } else {
+                                tradeValue = el
+                                lastValues.push(el)
+                            }
+                        }
+                    }
+
+
                     // Se o item abaixo existe, troque a ordem
-                    if (lastob && lasteditor) {
+                    if (tradeValue) {
                         // Troca de ordem: Ajusta os `data-order` de ambos os elementos
-                        lastob.setAttribute("data-order", String(oborder));
-                        lasteditor.setAttribute("data-order", String(oborder - 0.5));
-                        obj.setAttribute("data-order", String(oborder + 1));
-                        cd.setAttribute("data-order", String(oborder + 0.5));
-        
+                        myobj.setAttribute("data-order", String(tradeValue.getAttribute("data-order")));
+                        tradeValue.setAttribute("data-order", String(oborder));
+                        
+
                         // Reorganiza os elementos na DOM
                         Row.reorder();
                     }
@@ -162,16 +205,25 @@ class Row{
             });
 
         } else {
-            clone.removeChild(clone.querySelector("#secUp"))
-            clone.removeChild(clone.querySelector("#secDown"))
+            cd.removeChild(cd.querySelector("#secUp"))
+            cd.removeChild(cd.querySelector("#secDown"))
         }
         return cd
     }
+    destroy() {
+        if (this.obj) {
+            this.obj.remove();
+        }
+
+        this.obj = null
+    }
 }
-const basetit = new Row(1,false,false);
+const basetit = new Row(1, false, false);
 const basesub = new Row(2)
 const basep = new Row(3)
 new Row(3)
-
+document.getElementById("addButton").addEventListener("click", () => {
+    new Row();
+})
 const parags = document.getElementsByClassName("parag");
 
