@@ -36,9 +36,13 @@
 
 
 ​Linguagem: PHP
+
 ​Banco de Dados: MySQL
+
 ​Frontend: HTML, CSS, JavaScript
+
 ​Servidor Local (Recomendado): XAMPP ou WAMP
+
 
 ​🛑 Rodando o Projeto Localmente
 
